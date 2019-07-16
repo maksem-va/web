@@ -6,13 +6,13 @@ public class Jdbc {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL =
-            "jdbc:mysql://localhost/tutorial?useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false";
+            "jdbc:mysql://localhost/tutorial?serverTimezone=UTC";
 
     /**
      * User and Password
      */
     static final String USER = "root";
-    static final String PASSWORD = "senLu7zi";
+    static final String PASSWORD = "root";
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Connection connection = null;
@@ -38,13 +38,13 @@ public class Jdbc {
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
-            String secondname = resultSet.getString("secondname");
+            String secondName = resultSet.getString("secondname");
             int groupNumber = resultSet.getInt("groupNumber");
 
             System.out.println("\n================\n");
             System.out.println("id: " + id);
             System.out.println("FirstName: " + name);
-            System.out.println("SecondName: " + secondname);
+            System.out.println("SecondName: " + secondName);
             System.out.println("Group: " + groupNumber);
         }
 
