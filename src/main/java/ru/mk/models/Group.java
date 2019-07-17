@@ -2,15 +2,15 @@ package ru.mk.models;
 
 public class Group {
 
-    private long id;
+    private int id;
     private String groupNumber;
     private String groupName;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) { this.id = id;  }
+    public void setId(int id) { this.id = id;  }
 
     public String getNumber() {
         return groupNumber;

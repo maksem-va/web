@@ -10,7 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDAO {
-    private ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private static StudentDAO ourInstance = new StudentDAO();
+    private ConnectionManager connectionManager;
+    private StudentDAO() {
+        connectionManager = ConnectionManager.getInstance();
+    }
+    public static StudentDAO getInstance() {
+        return ourInstance;
+    }
 
     public List<Student> getAllStudents() throws SQLException {
         Connection connection = connectionManager.getConnection();

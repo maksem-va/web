@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 
-    <title>Groups</title>
+    <title>Students</title>
 
 </head>
 <body>
@@ -14,13 +14,15 @@
 <div class="container">
     <table>
         <tr>
-            <th>Number</th>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Group Name</th>
         </tr>
-        <c:forEach items="${groups}" var="group">
+        <c:forEach items="${students}" var="student">
             <tr>
-                <td>${group.number}</td>
-                <td>${group.name}</td>
+                <td>${student.firstName}</td>
+                <td>${student.lastName}</td>
+                <td>${student.group}</td>
             </tr>
         </c:forEach>
 

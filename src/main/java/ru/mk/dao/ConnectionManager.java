@@ -1,6 +1,9 @@
 package ru.mk.dao;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -10,6 +13,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class ConnectionManager {
     private Properties properties = null;
@@ -42,8 +46,8 @@ public class ConnectionManager {
         try {
             Class.forName(properties.getProperty("jdbc.driver"));
             return initConnection(
-                    properties.getProperty("jdbc.url") + properties.getProperty("jdbc.name")
-                            + properties.getProperty("jdbc.timezone"),
+                    properties.getProperty("jdbc.url") + "/" + properties.getProperty("jdbc.name")
+                            + "?" + properties.getProperty("jdbc.timezone"),
                     properties.getProperty("jdbc.username"),
                     properties.getProperty("jdbc.password"));
         } catch (ClassNotFoundException e) {
@@ -57,7 +61,7 @@ public class ConnectionManager {
             Class.forName(properties.getProperty("jdbc.driver"));
             return initConnection(
                     properties.getProperty("jdbc.url")
-                            + properties.getProperty("jdbc.timezone"),
+                            + "?" + properties.getProperty("jdbc.timezone"),
                     properties.getProperty("jdbc.username"),
                     properties.getProperty("jdbc.password"));
         } catch (ClassNotFoundException e) {
@@ -87,10 +91,8 @@ public class ConnectionManager {
 
 
     private void createInitialState(Statement statement) {
-        String INIT_PATH = "C:\\Files\\Coding\\1\\web\\src\\main\\resources\\students.sql";
-        String GROUPS_PATH = "C:\\Files\\Coding\\1\\web\\src\\main\\resources\\groups.sql";
-        String createTableSQL = getInitQuieries(INIT_PATH);
-        String createGroupsTable = getInitQuieries(GROUPS_PATH);
+        String initPath = "init.sql";
+        String createTableSQL = getInitQuieries(initPath);
         Arrays.stream(createTableSQL.split(";")).filter(x -> (!x.equals("\n"))).forEach(x -> {
             try {
                 statement.execute(x);
@@ -101,24 +103,18 @@ public class ConnectionManager {
     }
 
 
-
-
     private String getInitQuieries(String path) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            List lines = Files.readAllLines(Paths.get(path));
-            lines.forEach(stringBuilder::append);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringBuilder.toString();
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        return new BufferedReader(new InputStreamReader(inputStream)).lines()
+                .parallel().collect(Collectors.joining("\n"));
+
     }
 
     private Properties getProperties() {
         Properties properties = new Properties();
         try {
-            String PROPERTIES_PATH = "dataBase.properties";
-            properties.load(getClass().getClassLoader().getResourceAsStream(PROPERTIES_PATH));
+            String propertiesPath = "dataBase.properties";
+            properties.load(getClass().getClassLoader().getResourceAsStream(propertiesPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

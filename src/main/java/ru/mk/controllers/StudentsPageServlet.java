@@ -1,7 +1,7 @@
 package ru.mk.controllers;
 
-import ru.mk.dao.GroupDAO;
-import ru.mk.models.Group;
+import ru.mk.dao.StudentDAO;
+import ru.mk.models.Student;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +10,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/groups")
-public class GroupsPageServlet extends HttpServlet{
+@WebServlet(urlPatterns = "/students")
+public class StudentsPageServlet extends HttpServlet{
 
-    private GroupDAO groupDAO = GroupDAO.getInstance();
+    private StudentDAO studentDAO = StudentDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/groups.jsp");
-        List<Group> groups = groupDAO.getAllGroups();
-        req.setAttribute("groups", groups);
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/students.jsp");
+        List<Student> students = null;
+        try {
+            students = studentDAO.getAllStudents();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        req.setAttribute("students", students);
         resp.setCharacterEncoding("Unicode");
         dispatcher.forward(req, resp);
     }
