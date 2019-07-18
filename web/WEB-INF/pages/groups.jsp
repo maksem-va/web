@@ -16,10 +16,11 @@
         <tr>
             <th>Number</th>
             <th>Name</th>
+            <td><a href="${pageContext.request.contextPath}/students">List of existing students</a></td>
         </tr>
         <c:forEach items="${groups}" var="group">
             <tr>
-                <td>${group.number}</td>
+                <td><a href="${pageContext.request.contextPath}/students_in_group">${group.number}</a></td>
                 <td>${group.name}</td>
             </tr>
         </c:forEach>

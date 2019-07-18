@@ -50,7 +50,7 @@ public class GroupDAO {
         Group group = new Group();
         try {
             Connection connection = connectionManager.getConnection();
-            String sql = "SELECT * FROM webproject.groups WHERE groupId = ?";
+            String sql = "SELECT * FROM webproject.groups WHERE groupId = 23531/2";
             PreparedStatement preparedStatement = connection.prepareStatement(sql,
                     PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, groupId);

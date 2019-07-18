@@ -2,10 +2,7 @@ package ru.mk.dao;
 
 import ru.mk.models.Student;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,4 +38,27 @@ public class StudentDAO {
         connectionManager.destroy(connection, statement);
         return students;
     }
+
+//    public List<Student> getStudentByGroup(String group) throws SQLException {
+//        Connection connection = connectionManager.getConnection();
+//        String query = "SELECT * FROM students WHERE groupName = ?";
+//        PreparedStatement preparedStatement = connection.prepareStatement(query,
+//                PreparedStatement.RETURN_GENERATED_KEYS);
+//        ResultSet rs = preparedStatement.executeQuery(query);
+//        List<Student> students = new ArrayList<>();
+//        while (rs.next()) {
+//            Student student = new Student();
+//            long id = rs.getLong("id");
+//            String firstName = rs.getString("firstName");
+//            String lastName= rs.getString("lastName");
+//            String group = rs.getString("groupName");
+//            student.setId(id);
+//            student.setFirstName(firstName);
+//            student.setLastName(lastName);
+//            student.setGroup(group);
+//        }
+//        rs.close();
+//        connectionManager.destroy(connection, preparedStatement);
+//        return students;
+//    }
 }
